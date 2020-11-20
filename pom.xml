@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2020 Extasy Framework
+    This program and the accompanying materials are made
+    available under the terms of the Eclipse Public License 2.0
+    which is available at https://www.eclipse.org/legal/epl-2.0/
+
+    SPDX-License-Identifier: EPL-2.0
+
+    Contributors:
+      Extasy Framework - initial API and implementation
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.extasy</groupId>
+  <artifactId>extasy-license</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Eclipse Public License - v 2.0</name>
+  <description>Header Texts and others License resources</description>
+  <properties>
+    <license_contributor>${project.organization.name} - initial API and implementation</license_contributor>
+    <license_copyrightOwner>${project.organization.name}</license_copyrightOwner>
+    <license_header>src/main/resources/header.txt</license_header>
+    <plugin.gpg.version>1.5</plugin.gpg.version>
+    <plugin.javadoc.version>2.9.1</plugin.javadoc.version>
+    <plugin.license.check.version>3.0</plugin.license.check.version>
+    <plugin.nexus.staging.version>1.6.8</plugin.nexus.staging.version>
+    <plugin.release.version>3.0.0-M1</plugin.release.version>
+    <plugin.remote.resources.version>1.7.0</plugin.remote.resources.version>
+    <plugin.sort.pom.version>2.12.0</plugin.sort.pom.version>
+    <plugin.source.version>2.2.1</plugin.source.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>${plugin.sort.pom.version}</version>
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <keepBlankLines>true</keepBlankLines>
+            <predefinedSortOrder>custom_1</predefinedSortOrder>
+            <sortDependencies>scope</sortDependencies>
+            <sortProperties>true</sortProperties>
+            <verifyFail>stop</verifyFail>
+            <lineSeparator>\n</lineSeparator>
+            <createBackupFile>false</createBackupFile>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+              <phase>validate</phase>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-remote-resources-plugin</artifactId>
+          <version>${plugin.remote.resources.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>bundle</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>${plugin.license.check.version}</version>
+          <configuration>
+            <header>${license_header}</header>
+            <properties>
+              <h_inceptionYear>${project.inceptionYear}</h_inceptionYear>
+              <h_copyrightOwner>${license_copyrightOwner}</h_copyrightOwner>
+              <h_contributor>${license_contributor}</h_contributor>
+            </properties>
+            <failIfMissing>true</failIfMissing>
+            <strictCheck>true</strictCheck>
+            <useDefaultExcludes>false</useDefaultExcludes>
+            <includes>
+              <include>pom.xml</include>
+            </includes>
+            <excludes>
+              <exclude>src/**</exclude>
+            </excludes>
+            <mapping>
+              <svg>XML_STYLE</svg>
+            </mapping>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${plugin.source.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${plugin.javadoc.version}</version>
+          <executions>
+            <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>${plugin.gpg.version}</version>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+              <phase>verify</phase>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.sonatype.plugins</groupId>
+          <artifactId>nexus-staging-maven-plugin</artifactId>
+          <version>${plugin.nexus.staging.version}</version>
+          <extensions>true</extensions>
+          <configuration>
+            <serverId>ossrh</serverId>
+            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>${plugin.release.version}</version>
+          <configuration>
+            <tagNameFormat>v@{project.version}</tagNameFormat>
+            <releaseProfiles>release</releaseProfiles>
+            <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  <url>https://github.com/extasy-framework/extasy-license</url>
+  <inceptionYear>2020</inceptionYear>
+  <organization>
+    <name>Extasy Framework</name>
+  </organization>
+  <licenses>
+    <license>
+      <name>Eclipse Public License - v 2.0</name>
+      <url>https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>vzhukovs</id>
+      <name>Vladyslav Zhukovskyi</name>
+      <email>don@capo.pro</email>
+      <url>https://github.com/vzhukovs</url>
+      <organization>Extasy Framework</organization>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:extasy-framework/extasy-license.git</connection>
+    <developerConnection>scm:git:git@github.com:extasy-framework/extasy-license.git</developerConnection>
+    <url>https://github.com/extasy-framework/extasy-license/tree/main</url>
+    <tag>v@{project.version}</tag>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
