@@ -20,7 +20,7 @@
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Eclipse Public License - v 2.0</name>
-  <description>Header Texts and others License resources</description>
+  <description>License resources (header and license text)</description>
   <properties>
     <license_contributor>${project.organization.name} - initial API and implementation</license_contributor>
     <license_copyrightOwner>${project.organization.name}</license_copyrightOwner>
