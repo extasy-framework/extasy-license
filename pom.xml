@@ -17,7 +17,7 @@
 
   <groupId>io.extasy</groupId>
   <artifactId>extasy-license</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Eclipse Public License - v 2.0</name>
   <description>License resources (header and license text)</description>
@@ -216,7 +216,7 @@
     <connection>scm:git:git@github.com:extasy-framework/extasy-license.git</connection>
     <developerConnection>scm:git:git@github.com:extasy-framework/extasy-license.git</developerConnection>
     <url>https://github.com/extasy-framework/extasy-license/tree/main</url>
-    <tag>v1.0.0</tag>
+    <tag>v@{project.version}</tag>
   </scm>
   <distributionManagement>
     <repository>
